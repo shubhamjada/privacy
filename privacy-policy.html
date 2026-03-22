@@ -201,8 +201,9 @@ h1 { font-family: var(--heading); font-size: clamp(56px, 10vw, 112px); font-weig
 .sec::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 1px; background: linear-gradient(90deg, var(--glass-border), transparent); }
 .sec:last-child::after { display: none; }
 .sec:last-child { padding-bottom: 0; margin-bottom: 0; }
-.reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1); }
-.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal { opacity: 1; transform: none; }
+.ready .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1); }
+.ready .reveal.visible { opacity: 1; transform: none; }
 
 .sec-lbl { display: flex; align-items: center; gap: 12px; font-family: var(--mono); font-size: 10px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--mo); margin-bottom: 16px; }
 .sec-lbl::after { content: ''; height: 1px; flex: 1; max-width: 60px; background: linear-gradient(90deg, var(--mo-b), transparent); }
@@ -684,6 +685,9 @@ window.addEventListener('scroll', () => {
   const pct = (window.scrollY / (h.scrollHeight - h.clientHeight)) * 100;
   document.getElementById('prog').style.width = pct + '%';
 }, {passive: true});
+
+// Add ready class — enables animations only after JS is confirmed working
+document.body.classList.add('ready');
 
 // Scroll reveal animation
 const revealObserver = new IntersectionObserver((entries) => {
